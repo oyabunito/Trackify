@@ -488,7 +488,7 @@ export default function DashboardPage() {
                       {a.genres?.[0] && <div style={{ fontSize: 12, color: dark, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.genres[0]}</div>}
                     </div>
                     <div style={{ textAlign: 'right', flex: '0 0 auto' }}>
-                      <div style={{ fontSize: 12, fontFamily: mono, color: dark }}>{a.followers.total.toLocaleString('fr-FR')}</div>
+                      <div style={{ fontSize: 12, fontFamily: mono, color: dark }}>{(a.followers?.total ?? 0).toLocaleString('fr-FR')}</div>
                       <div style={{ fontSize: 10, color: dark }}>followers</div>
                     </div>
                   </div>

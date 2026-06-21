@@ -45,7 +45,7 @@ interface AggGenre { name: string; count: number; pct: number; color: string; }
 
 function aggregateGenres(artists: SpotifyArtist[]): AggGenre[] {
   const counts: Record<string, number> = {};
-  artists.forEach(a => a.genres.forEach(g => { counts[g] = (counts[g] || 0) + 1; }));
+  artists.forEach(a => (a.genres ?? []).forEach(g => { counts[g] = (counts[g] || 0) + 1; }));
   const total = Object.values(counts).reduce((s, n) => s + n, 0) || 1;
   return Object.entries(counts)
     .sort((a, b) => b[1] - a[1])
@@ -229,8 +229,8 @@ export default function DashboardPage() {
     const uniqueArtists = new Set<string>();
     let totalMs = 0;
     recent.forEach(r => {
-      r.track.artists.forEach(a => uniqueArtists.add(a.id));
-      totalMs += r.track.duration_ms;
+      (r.track?.artists ?? []).forEach(a => uniqueArtists.add(a.id));
+      totalMs += r.track?.duration_ms ?? 0;
     });
     return {
       minutes: Math.round(totalMs / 60000).toLocaleString('fr-FR'),

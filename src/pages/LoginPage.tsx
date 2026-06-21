@@ -1,5 +1,7 @@
-import { useState, type CSSProperties } from "react";
+import { useState, useEffect, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
+import { startLogin } from "../api/auth";
+import { useAuth } from "../hooks/useAuth";
 
 const keyframesStyle = `
 @keyframes tkfloat {
@@ -22,24 +24,23 @@ const keyframesStyle = `
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { user, loading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [remember, setRemember] = useState(true);
-  const [synced, setSynced] = useState(false);
   const [hoveredBtn, setHoveredBtn] = useState<string | null>(null);
+  const synced = !!user;
 
-  const handleSpotify = () => {
-    if (synced) {
-      navigate("/dashboard");
-    } else {
-      setSynced(true);
-    }
-  };
+  useEffect(() => {
+    if (!loading && user) navigate("/dashboard", { replace: true });
+  }, [loading, user, navigate]);
+
+  const handleSpotify = () => { startLogin(); };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/dashboard");
+    startLogin();
   };
 
   const albumCover = (

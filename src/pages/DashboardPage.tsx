@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { getTopArtists, getTopTracks, getRecentlyPlayed, type SpotifyArtist, type SpotifyTrack, type PlayHistory } from '../api/spotify';
 import { fetchLyrics } from '../api/lyrics';
@@ -164,7 +164,7 @@ export default function DashboardPage() {
   const [query, setQuery] = useState('');
   const [genreStyle, setGenreStyle] = useState<'donut' | 'radar' | 'bubble' | 'bars'>('donut');
   const [showSettings, setShowSettings] = useState(false);
-  const [settingsTab, setSettingsTab] = useState<'infos' | 'apparence' | 'langue' | 'deconnex'>('infos');
+  const [settingsTab, setSettingsTab] = useState<'infos' | 'apparence' | 'langue'>('infos');
   const [displayName, setDisplayName] = useState('');
   const [historyDuration, setHistoryDuration] = useState('7 jours');
   const [language, setLanguage] = useState('fr');
@@ -379,10 +379,9 @@ export default function DashboardPage() {
     { key: 'recherche' as const, label: 'Retrouve ton son' },
   ];
   const settingsNavItems = [
-    { key: 'infos' as const, label: 'Infos personnelles' },
+    { key: 'infos' as const, label: 'Infos' },
     { key: 'apparence' as const, label: 'Apparence' },
     { key: 'langue' as const, label: 'Langue' },
-    { key: 'deconnex' as const, label: 'Déconnexion', red: true },
   ];
   const durationOptions = ['7 jours', '1 mois', '2 mois', '3 mois', '6 mois', '1 an', '2 ans', '3 ans', 'Depuis le début'];
   const languages = [
@@ -673,15 +672,12 @@ export default function DashboardPage() {
               <div className="tk-settings-body" style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
                 <div className="tk-settings-nav" style={{ width: 196, borderRight: '1px solid rgba(255,255,255,.06)', padding: '12px 8px', display: 'flex', flexDirection: 'column', gap: 2 }}>
                   {settingsNavItems.map(item => (
-                    <React.Fragment key={item.key}>
-                      {item.red && <div style={{ height: 1, background: 'rgba(255,255,255,.06)', margin: '8px 4px' }} />}
-                      <button onClick={() => setSettingsTab(item.key)} style={{
-                        padding: '10px 14px', borderRadius: 10, border: 'none', textAlign: 'left', cursor: 'pointer',
-                        fontFamily: 'inherit', fontSize: 13, fontWeight: 600, width: '100%',
-                        background: settingsTab === item.key ? (item.red ? 'rgba(239,68,68,.12)' : 'rgba(30,215,96,.1)') : 'transparent',
-                        color: settingsTab === item.key ? (item.red ? '#ef4444' : green) : (item.red ? '#ef4444' : muted),
-                      }}>{item.label}</button>
-                    </React.Fragment>
+                    <button key={item.key} onClick={() => setSettingsTab(item.key)} style={{
+                      padding: '10px 14px', borderRadius: 10, border: 'none', textAlign: 'left', cursor: 'pointer',
+                      fontFamily: 'inherit', fontSize: 13, fontWeight: 600, width: '100%',
+                      background: settingsTab === item.key ? 'rgba(30,215,96,.1)' : 'transparent',
+                      color: settingsTab === item.key ? green : muted,
+                    }}>{item.label}</button>
                   ))}
                 </div>
                 <div style={{ flex: 1, padding: '20px 28px', overflowY: 'auto' }}>
@@ -757,19 +753,13 @@ export default function DashboardPage() {
                     </div>
                   )}
 
-                  {settingsTab === 'deconnex' && (
-                    <div style={{ textAlign: 'center', paddingTop: 40 }}>
-                      <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(239,68,68,.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-                        <span style={{ fontSize: 28, color: '#ef4444' }}>⏻</span>
-                      </div>
-                      <div style={{ fontFamily: mont, fontWeight: 800, fontSize: 20, marginBottom: 8 }}>Se déconnecter</div>
-                      <p style={{ color: dimmed, fontSize: 14, lineHeight: 1.6, maxWidth: 360, margin: '0 auto 28px' }}>
-                        Tu seras déconnecté de ton compte Spotify et redirigé vers la page de connexion.
-                      </p>
-                      <button onClick={logout} style={{ padding: '12px 28px', borderRadius: 12, background: '#ef4444', border: 'none', color: '#fff', fontWeight: 700, fontSize: 14, cursor: 'pointer', fontFamily: 'inherit' }}>Se déconnecter de Spotify</button>
-                    </div>
-                  )}
                 </div>
+              </div>
+              <div style={{ padding: '14px 20px', borderTop: '1px solid rgba(255,255,255,.06)', display: 'flex', justifyContent: 'flex-end', flex: '0 0 auto' }}>
+                <button onClick={logout} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '9px 16px', borderRadius: 10, background: 'rgba(239,68,68,.1)', border: '1px solid rgba(239,68,68,.3)', color: '#f87171', fontWeight: 700, fontSize: 13, cursor: 'pointer', fontFamily: 'inherit' }}>
+                  <span style={{ fontSize: 14 }}>⏻</span>
+                  Se déconnecter
+                </button>
               </div>
             </div>
           </>

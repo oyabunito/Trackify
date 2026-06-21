@@ -1,4 +1,4 @@
-import { useState, CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 
 const keyframesStyle = `

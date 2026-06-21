@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { artGradients, artists, tracks, genresRaw, genreColors, historyData } from '../data';
-import { searchLyrics, type SearchResult } from '../utils/search';
+import { searchLyrics } from '../utils/search';
 
 function Cover({ gradient, label, size, radius }: { gradient: string; label: string; size: number; radius: number | string }) {
   return (
@@ -453,7 +453,7 @@ export default function DashboardPage() {
               <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
                 {/* Left nav */}
                 <div style={{ width: 196, borderRight: '1px solid rgba(255,255,255,.06)', padding: '12px 8px', display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  {settingsNavItems.map((item, i) => (
+                  {settingsNavItems.map((item) => (
                     <React.Fragment key={item.key}>
                       {item.red && <div style={{ height: 1, background: 'rgba(255,255,255,.06)', margin: '8px 4px' }} />}
                       <button onClick={() => setSettingsTab(item.key)} style={{

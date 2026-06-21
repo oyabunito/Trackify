@@ -48,7 +48,8 @@ export function searchLyrics(query: string): SearchResult[] {
 
   candidates.forEach(t => {
     const lines = t.lyrics.split('\n');
-    let best: { line: string; words: string[]; idx: Set<number>; coverage: number; avg: number; score: number } | null = null;
+    type Best = { line: string; words: string[]; idx: Set<number>; coverage: number; avg: number; score: number };
+    let best: Best | null = null;
 
     lines.forEach(line => {
       const words = line.split(/\s+/);
@@ -71,7 +72,8 @@ export function searchLyrics(query: string): SearchResult[] {
       if (!best || score > best.score) best = { line, words, idx, coverage, avg: matched ? totalSim / matched : 0, score };
     });
 
-    if (best && best.coverage >= 0.5) out.push({ track: t, best });
+    const b = best as Best | null;
+    if (b && b.coverage >= 0.5) out.push({ track: t, best: b });
   });
 
   out.sort((a, b) => b.best.score - a.best.score);

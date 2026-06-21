@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800;900&family=Space+Mono:wght@400;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 10px; border: 3px solid transparent; background-clip: padding-box; }
+*::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.2); background-clip: padding-box; }
+body { margin: 0; font-family: 'Figtree', sans-serif; background: #08090a; color: #e9efe9; -webkit-font-smoothing: antialiased; }
+input { font-family: inherit; }
+a { text-decoration: none; color: inherit; }
+
+@keyframes tkfade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes tkrise { from { transform: translateY(10px); } to { transform: none; } }
+@keyframes tkpulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+@keyframes tkfloat { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-18px) rotate(4deg); } }
+@keyframes tkfloat2 { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(22px) rotate(-5deg); } }
+@keyframes tkModalIn { from { opacity: 0; transform: translate(-50%,-50%) scale(.94); } to { opacity: 1; transform: translate(-50%,-50%) scale(1); } }
+@keyframes tkOverlayIn { from { opacity: 0; } to { opacity: 1; } }

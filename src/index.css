@@ -15,3 +15,36 @@ a { text-decoration: none; color: inherit; }
 @keyframes tkfloat2 { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(22px) rotate(-5deg); } }
 @keyframes tkModalIn { from { opacity: 0; transform: translate(-50%,-50%) scale(.94); } to { opacity: 1; transform: translate(-50%,-50%) scale(1); } }
 @keyframes tkOverlayIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ===== Responsive overrides ===== */
+@media (max-width: 900px) {
+  .tk-login-root { flex-direction: column !important; min-height: auto !important; }
+  .tk-login-left, .tk-login-right { flex: 0 0 auto !important; width: 100% !important; }
+  .tk-login-left { padding: 88px 24px 32px !important; border-left: none !important; }
+  .tk-login-left h1 { font-size: 42px !important; line-height: 1.05 !important; margin-bottom: 16px !important; }
+  .tk-login-left p { font-size: 16px !important; }
+  .tk-login-right { padding: 32px 24px 48px !important; border-left: none !important; border-top: 1px solid rgba(255,255,255,.05); }
+  .tk-login-decor { display: none !important; }
+  .tk-sync-badge { top: 16px !important; right: 16px !important; left: 16px !important; justify-content: center; text-align: center; }
+  .tk-login-form-title { font-size: 30px !important; }
+
+  .tk-dash-header { gap: 12px !important; }
+  .tk-dash-header-title { font-size: 20px !important; }
+  .tk-stats-strip { grid-template-columns: repeat(2, 1fr) !important; }
+  .tk-cards-2col { grid-template-columns: 1fr !important; }
+  .tk-tabs-bar { overflow-x: auto; max-width: 100%; scrollbar-width: none; }
+  .tk-tabs-bar::-webkit-scrollbar { display: none; }
+  .tk-tabs-bar button { white-space: nowrap; flex: 0 0 auto; }
+  .tk-settings-modal { width: calc(100vw - 24px) !important; max-width: none !important; }
+  .tk-settings-body { flex-direction: column !important; }
+  .tk-settings-nav { width: 100% !important; flex-direction: row !important; overflow-x: auto; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,.06) !important; padding: 8px !important; }
+  .tk-settings-nav > button, .tk-settings-nav > div { flex: 0 0 auto; margin: 0 !important; border-top: none !important; padding-top: 10px !important; }
+  .tk-cover-row { padding: 6px !important; gap: 10px !important; }
+  .tk-genre-options { flex-wrap: wrap; }
+}
+
+@media (max-width: 480px) {
+  .tk-stats-strip { grid-template-columns: 1fr !important; }
+  .tk-login-left h1 { font-size: 34px !important; }
+  .tk-dash-container { padding: 18px 14px 60px !important; }
+}

@@ -95,6 +95,7 @@ export default function LoginPage() {
     <>
       <style>{keyframesStyle}</style>
       <div
+        className="tk-login-root"
         style={{
           minHeight: "100vh",
           display: "flex",
@@ -104,6 +105,7 @@ export default function LoginPage() {
       >
         {/* Left column */}
         <div
+          className="tk-login-left"
           style={{
             flex: 1.05,
             background:
@@ -117,6 +119,7 @@ export default function LoginPage() {
           }}
         >
           {/* Floating album covers */}
+          <div className="tk-login-decor" style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
           <div
             style={albumCover(
               "14%",
@@ -157,6 +160,8 @@ export default function LoginPage() {
               pointerEvents: "none",
             }}
           />
+
+          </div>
 
           {/* Logo */}
           <div style={{ display: "flex", alignItems: "center", gap: 12, zIndex: 1 }}>
@@ -235,6 +240,7 @@ export default function LoginPage() {
 
         {/* Sync badge */}
         <div
+          className="tk-sync-badge"
           style={{
             position: "absolute",
             top: 28,
@@ -273,6 +279,7 @@ export default function LoginPage() {
 
         {/* Right column */}
         <div
+          className="tk-login-right"
           style={{
             flex: 1,
             background:

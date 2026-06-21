@@ -414,7 +414,7 @@ export default function DashboardPage() {
   return (
     <>
       <style>{keyframes}</style>
-      <div style={{ maxWidth: 1240, margin: '0 auto', padding: '30px 28px 90px', animation: 'tkfade .4s', background: '#08090a', minHeight: '100vh', fontFamily: "'Figtree', sans-serif", color: '#e2e8e0' }}>
+      <div className="tk-dash-container" style={{ maxWidth: 1240, margin: '0 auto', padding: '30px 28px 90px', animation: 'tkfade .4s', background: '#08090a', minHeight: '100vh', fontFamily: "'Figtree', sans-serif", color: '#e2e8e0' }}>
 
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 8, flexWrap: 'wrap' }}>
@@ -443,7 +443,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Tabs */}
-        <div style={{ display: 'inline-flex', background: cardBg, borderRadius: 999, padding: 4, border: '1px solid rgba(255,255,255,.05)', marginTop: 22, marginBottom: 28 }}>
+        <div className="tk-tabs-bar" style={{ display: 'inline-flex', background: cardBg, borderRadius: 999, padding: 4, border: '1px solid rgba(255,255,255,.05)', marginTop: 22, marginBottom: 28, maxWidth: '100%' }}>
           {tabItems.map(t => (
             <button key={t.key} onClick={() => setSection(t.key)} style={{
               padding: '9px 18px', borderRadius: 999, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
@@ -458,7 +458,7 @@ export default function DashboardPage() {
         {/* Tab 1: Profil */}
         {section === 'profil' && (
           <div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 22 }}>
+            <div className="tk-stats-strip" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 22 }}>
               {[
                 { label: 'Minutes (50 dernières)', value: stats.minutes, sub: 'à partir des écoutes récentes' },
                 { label: 'Artistes uniques', value: String(stats.uniqueCount), sub: 'dans tes 50 dernières écoutes' },
@@ -473,7 +473,7 @@ export default function DashboardPage() {
               ))}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 22 }}>
+            <div className="tk-cards-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 22 }}>
               <div style={{ background: cardBg, border: cardBorder, borderRadius: 18, padding: '20px 22px' }}>
                 <div style={{ fontFamily: mont, fontWeight: 800, fontSize: 18, marginBottom: 14 }}>Top artistes</div>
                 {topArtists.slice(0, 6).map((a, i) => (
@@ -657,13 +657,13 @@ export default function DashboardPage() {
         {showSettings && (
           <>
             <div onClick={() => setShowSettings(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.6)', backdropFilter: 'blur(4px)', zIndex: 1000, animation: 'tkOverlayIn .2s' }} />
-            <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 720, maxWidth: 'calc(100vw - 40px)', maxHeight: '85vh', background: '#0d1210', borderRadius: 20, border: '1px solid rgba(255,255,255,.1)', boxShadow: '0 32px 80px rgba(0,0,0,.7)', zIndex: 1001, animation: 'tkModalIn .24s cubic-bezier(.34,1.56,.64,1)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            <div className="tk-settings-modal" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 720, maxWidth: 'calc(100vw - 40px)', maxHeight: '85vh', background: '#0d1210', borderRadius: 20, border: '1px solid rgba(255,255,255,.1)', boxShadow: '0 32px 80px rgba(0,0,0,.7)', zIndex: 1001, animation: 'tkModalIn .24s cubic-bezier(.34,1.56,.64,1)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 24px', borderBottom: '1px solid rgba(255,255,255,.06)' }}>
                 <span style={{ fontFamily: mont, fontWeight: 800, fontSize: 18 }}>Paramètres</span>
                 <button onClick={() => setShowSettings(false)} style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(255,255,255,.06)', border: 'none', color: '#ccc', fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
               </div>
-              <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
-                <div style={{ width: 196, borderRight: '1px solid rgba(255,255,255,.06)', padding: '12px 8px', display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <div className="tk-settings-body" style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+                <div className="tk-settings-nav" style={{ width: 196, borderRight: '1px solid rgba(255,255,255,.06)', padding: '12px 8px', display: 'flex', flexDirection: 'column', gap: 2 }}>
                   {settingsNavItems.map(item => (
                     <React.Fragment key={item.key}>
                       {item.red && <div style={{ height: 1, background: 'rgba(255,255,255,.06)', margin: '8px 4px' }} />}

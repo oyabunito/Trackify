@@ -482,10 +482,10 @@ export default function DashboardPage() {
                     onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,.04)')}
                     onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
                     <span style={{ fontFamily: mont, fontWeight: 800, fontSize: 16, color: i === 0 ? green : dark, width: 22, textAlign: 'right' }}>{i + 1}</span>
-                    <Cover imageUrl={a.images[0]?.url} label={a.name[0]} size={42} radius="50%" />
+                    <Cover imageUrl={a.images?.[0]?.url} label={a.name?.[0] || '?'} size={42} radius="50%" />
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontWeight: 600, fontSize: 15, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.name}</div>
-                      {a.genres[0] && <div style={{ fontSize: 12, color: dark, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.genres[0]}</div>}
+                      {a.genres?.[0] && <div style={{ fontSize: 12, color: dark, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.genres[0]}</div>}
                     </div>
                     <div style={{ textAlign: 'right', flex: '0 0 auto' }}>
                       <div style={{ fontSize: 12, fontFamily: mono, color: dark }}>{a.followers.total.toLocaleString('fr-FR')}</div>
@@ -503,7 +503,7 @@ export default function DashboardPage() {
                     onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,.04)')}
                     onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
                     <span style={{ fontFamily: mont, fontWeight: 800, fontSize: 16, color: i === 0 ? green : dark, width: 22, textAlign: 'right' }}>{i + 1}</span>
-                    <Cover imageUrl={t.album.images[t.album.images.length - 1]?.url} label={t.name[0]} size={42} radius={8} />
+                    <Cover imageUrl={t.album?.images?.[t.album.images.length - 1]?.url} label={t.name?.[0] || '?'} size={42} radius={8} />
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontWeight: 600, fontSize: 15, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{t.name}</div>
                       <div style={{ fontSize: 12, color: dark, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{t.artists.map(a => a.name).join(', ')}</div>
@@ -553,7 +553,7 @@ export default function DashboardPage() {
                       onClick={() => window.open(h.play.track.external_urls.spotify, '_blank')}
                       onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,.04)')}
                       onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
-                      <Cover imageUrl={h.play.track.album.images[h.play.track.album.images.length - 1]?.url} label={h.play.track.name[0]} size={44} radius={8} />
+                      <Cover imageUrl={h.play.track.album?.images?.[h.play.track.album.images.length - 1]?.url} label={h.play.track.name?.[0] || '?'} size={44} radius={8} />
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontWeight: 600, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{h.play.track.name}</div>
                         <div style={{ fontSize: 12, color: dark, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{h.play.track.artists.map(a => a.name).join(', ')}</div>
@@ -616,7 +616,7 @@ export default function DashboardPage() {
                       onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(30,215,96,.3)')}
                       onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,.06)')}>
                       <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-                        <Cover imageUrl={r.track.album.images[r.track.album.images.length - 1]?.url} label={r.track.name[0]} size={56} radius={10} />
+                        <Cover imageUrl={r.track.album?.images?.[r.track.album.images.length - 1]?.url} label={r.track.name?.[0] || '?'} size={56} radius={10} />
                         <div style={{ flex: 1, minWidth: 0 }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4, flexWrap: 'wrap' }}>
                             <span style={{ fontWeight: 700, fontSize: 16 }}>{r.track.name}</span>

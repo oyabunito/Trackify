@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { isAuthenticated, logout as authLogout } from '../api/auth';
 import { getMe, type SpotifyUser } from '../api/spotify';
+import { clearLyricsCache } from '../api/lyrics';
 
 interface AuthContextValue {
   user: SpotifyUser | null;
@@ -35,6 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     authLogout();
+    clearLyricsCache();
     setUser(null);
     window.location.href = '/';
   };

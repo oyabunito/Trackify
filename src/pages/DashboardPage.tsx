@@ -205,23 +205,35 @@ export default function DashboardPage() {
   }, []);
 
   // Lazy-load lyrics for unique tracks in recent plays when search tab opens
+  // Start loading lyrics in background as soon as recent plays arrive.
+  // localStorage cache persists across reloads; React state holds them for the session.
   useEffect(() => {
-    if (section !== 'recherche' || !recent.length) return;
+    if (!recent.length) return;
     const unique: Record<string, SpotifyTrack> = {};
     recent.forEach(r => { unique[r.track.id] = r.track; });
-    const missing = Object.values(unique).filter(t => !(t.id in lyricsMap));
-    if (!missing.length) return;
+    const tracks = Object.values(unique).filter(t => !(t.id in lyricsMap));
+    if (!tracks.length) return;
+
+    let cancelled = false;
     setLyricsLoading(true);
-    (async () => {
-      const next: Record<string, string | null> = {};
-      await Promise.all(missing.map(async t => {
-        const text = await fetchLyrics(t.id, t.artists[0]?.name || '', t.name, t.duration_ms);
-        next[t.id] = text;
-      }));
-      setLyricsMap(prev => ({ ...prev, ...next }));
-      setLyricsLoading(false);
-    })();
-  }, [section, recent]);
+
+    const CONCURRENCY = 5;
+    const queue = [...tracks];
+    const worker = async () => {
+      while (queue.length && !cancelled) {
+        const t = queue.shift()!;
+        const text = await fetchLyrics(t.id, t.artists?.[0]?.name || '', t.name, t.duration_ms);
+        if (cancelled) return;
+        setLyricsMap(prev => ({ ...prev, [t.id]: text }));
+      }
+    };
+
+    Promise.all(Array.from({ length: CONCURRENCY }, worker)).finally(() => {
+      if (!cancelled) setLyricsLoading(false);
+    });
+
+    return () => { cancelled = true; };
+  }, [recent]);
 
   const aggregatedGenres = useMemo(() => aggregateGenres(topArtists), [topArtists]);
 
@@ -593,16 +605,12 @@ export default function DashboardPage() {
               )}
             </div>
 
-            {lyricsLoading && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: dimmed, fontSize: 13, marginBottom: 12 }}>
-                <div style={{ width: 14, height: 14, border: '2px solid rgba(255,255,255,.1)', borderTopColor: green, borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
-                Récupération des paroles…
-              </div>
-            )}
-
-            {!query.trim() && !lyricsLoading && (
-              <div style={{ color: dark, fontSize: 13 }}>
-                {searchTracks.length} morceau{searchTracks.length > 1 ? 'x' : ''} indexé{searchTracks.length > 1 ? 's' : ''} sur {recent.length ? new Set(recent.map(r => r.track.id)).size : 0}.
+            {!query.trim() && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: dimmed, fontSize: 13 }}>
+                {lyricsLoading && (
+                  <div style={{ width: 14, height: 14, border: '2px solid rgba(255,255,255,.1)', borderTopColor: green, borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+                )}
+                <span>{searchTracks.length} morceau{searchTracks.length > 1 ? 'x' : ''} indexé{searchTracks.length > 1 ? 's' : ''} sur {recent.length ? new Set(recent.map(r => r.track.id)).size : 0}{lyricsLoading ? ' (en cours…)' : ''}.</span>
               </div>
             )}
 
